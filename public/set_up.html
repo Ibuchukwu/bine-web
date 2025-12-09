@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bine | Set up a Class</title>
+    <link rel="icon" type="image/png" href="bine.png">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link rel="stylesheet" href="styles.css"/>
+    <audio id="sound" src="testNote.ogg" preload="auto"></audio>
+</head>
+<body style="background-image: linear-gradient(to right,rgba(8, 48, 78, 0.4) , rgba(4, 148, 160, 0.4));">
+    <div class="window">
+        <div class="logo-top">
+            <img src="bine.png" alt="Bine logo" class="logo">
+            <!--<h3> Bine</h3>-->
+        </div>
+        <h3 style="text-align: center;">Set up the Class you'll be managing</h3>
+        <hr>
+        <form>  
+            <fieldset>
+                <label>Select University:</label><br>
+                <select id="university">
+                    <option value="futo">Federal University of Technology, Owerri. (FUTO)</option>
+                    <option value="unn">University of Nigeria, Nsukka. (UNN)</option>
+                </select>
+                <button>Add A university not listed above</button>
+                <hr><br>
+                <label>Select School (Faculty):</label><br>
+                <select id="School">
+                    <option value="sict">School of Information Communication Technology (SICT)</option>
+                    <option value="slit">School of Logistics and Innovative Technology (SLIT)</option>
+                    <option value="sbms">School of Basic Medical Sciences (SBMS)</option>
+                </select>
+                <button>Add A faculty not listed above</button>
+                <hr><br>
+                <label>Select Department:</label><br>
+                <select id="School">
+                    <option value="soe">Software Engineering (SOE)</option>
+                </select>
+                <button>Add department not listed above</button>
+                <hr><br>
+                <label>Which Class is this :</label><h6>(e.g simply type "2024/2025" for the class that got admitted into the session 2024/2025)</h6><br>
+                <input type="text" id="regNo">
+                <hr><br>
+            </fieldset>
+            <button type="submit" id="login-button">Create Class</button>
+        </form>
+    </div>
+</body>
+</html>

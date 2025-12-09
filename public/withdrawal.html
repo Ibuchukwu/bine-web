@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bine - Make Withdrawal</title>
+  <link rel="icon" type="image/png" href="bine.png">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+
+<body>
+    <div class="admin-container">
+      <!-- Sidebar - Same as dashboard -->
+      <div id="sidebar" class="sidebar">
+          <div id="avatar">
+            <h3 id="className">SOE 25</h3>
+            <p id="departmentName">Software Engineering Department<br>(Class of 2024/2025)</p>
+          </div>
+          <hr/>
+
+          <div class="menu-section">
+            <a href="dashboard.html"><span>🏚 Go to Dashboard</span></a>
+          </div>
+        
+          <div class="menu-section">
+            <p>Student Management</p>
+            <a href="approveProfiles.html"><span>✔ Approve Student Profiles</span></a>
+            <a href="allStudentsProfiles.html" style="text-decoration: none; color: inherit;"><span >👥 Show All Student Profiles</span></a>
+          </div>
+    
+        <div class="menu-section">
+          <p>Dues Management</p>
+          <a href="manageDue.html"><span>🛠 Manage Dues</span></a>
+          <a href="reportDue.html"><span>📊 Dues Report</span></a>
+        </div>
+
+        <div class="menu-section">
+          <p>Lists Management</p>
+          <span>➕ Create a List</span>
+          <span>📜 Manage Lists</span>
+        </div>
+  
+        <div class="menu-section">
+          <p>Funds Management</p>
+          <a href="withdrawal.html" class="active"><span>💸 Make Withdrawal</span></a>
+          <a href="financialStatement.html"><span>📑 Financial Statement</span></a>
+        </div>
+  
+        <div class="menu-section">
+          <p>Settings</p>
+          <span>🔔 Notification Channels</span>
+          <span onclick="logout()">📤 Log Out</span>
+        </div>
+      </div>
+    
+      <div id="shade"></div>
+  
+      <div id="main-content">
+        <div class="top-bar">
+          <i id="toggleSidebar" class="fa fa-bars"></i>
+          <p>Make Withdrawal</p>
+          <div class="status-indicator">
+            <i class="fas fa-circle" style="font-size: 8px; color: var(--success-color);"></i>
+            <span>Online</span>
+          </div>
+        </div><br>
+        
+        <div id="balances">
+          <p id="currentUser" style="font-size: 14px;"></p>
+          <span style="font-style:italic;">Available balance: <br>
+            <span id="total-balance">₦******</span></span>
+        </div><br><hr><br>
+        
+        <div class="withdrawal-form" id="set-details" hidden>
+          <h3>Set Withdrawal Account</h3>
+          <div id="withdrawalForm">
+            <div class="form-group">
+              <label for="bankName">Bank Name</label>
+              <select id="bankName" name="bankName" required>
+                <option value="">Select Bank</option>
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label for="accountNumber">Account Number</label>
+              <input type="text" id="accountNumber" name="accountNumber" pattern="[0-9]{10}" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="accountName">Account Name</label>
+              <input type="text" id="accountName" name="accountName" readonly>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary" id="setWithdrawalAccount" onclick="setWithdrawalAccount()">Set Withdrawal Account</button>
+              <button type="button" class="btn btn-outline" onclick="resetForm()">Cancel</button>
+            </div>
+          </div>
+        </div>
+        <div class="withdrawal-form" id="disburse" hidden>
+            <h3>Initiate Disbursment</h3>
+            <div id="account-details"></div>
+            <div class="form-group">
+                <label for="amount">Amount (₦)</label>
+                <input type="number" id="amount" name="amount" min="100" step="100" required>
+            </div>
+            <div>
+                <button class="btn btn-primary" id="initiate" onclick="initiateWithdrawal()">Initiate</button>
+            </div>
+        </div>
+
+        <!--Payment Excesses-->
+        <div class="withdrawal-history">
+          <h3>Payment Excesses</h3>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Description</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody id="withdrawalHistory">
+                <!-- Will be populated by JavaScript -->
+                <tr>
+                  <td colspan="5" class="empty-state">No excess Payment yet</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div><br>
+
+        <!--Withdrawal History-->
+        <div class="withdrawal-history">
+          <h3>Recent Withdrawals</h3>
+          <div class="table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th>Transaction ID</th>
+                  <th>Amount</th>
+                  <th>Balance Before</th>
+                  <th>Balance After</th>
+                  <th>Status</th>
+                  <th>Date</th>
+                </tr>
+              </thead>
+              <tbody id="TableBody">
+                  <tr>
+                    <td colspan="2" class="empty-state" style="padding: 10px; left: 50%;">
+                      <i class="fas fa-clipboard-list" style="font-size: 55px; opacity: 0.2;"></i>
+                      <h2>No withdrawal history yet</h2>
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Script -->
+    <script>
+      // Sidebar toggle functionality
+      const toggleSidebar = document.getElementById("toggleSidebar");
+      const sidebar = document.getElementById("sidebar");
+      const shade = document.getElementById("shade");
+  
+      toggleSidebar.addEventListener("click", () => {
+        sidebar.classList.toggle("show");
+        shade.classList.toggle("visible");
+      });
+  
+      shade.addEventListener("click", () => {
+        sidebar.classList.remove("show");
+        shade.classList.remove("visible");
+      });
+    </script>
+    <script type="module" src="./withdrawal.js"></script>
+  </body>  
+</html>

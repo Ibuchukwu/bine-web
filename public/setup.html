@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bine | Set Up Department</title>
+    <link rel="icon" type="image/png" href="bine.png">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link rel="stylesheet" href="styles.css"/>
+</head>
+<body style="background-image: linear-gradient(to right,rgba(8, 48, 78, 0.2) , rgba(4, 148, 160, 0.2));">
+    <div id="login-fieldset" style="background-color: rgba(80, 130, 60, 0.1); font-weight: 700;">
+        <div class="logo-top">
+        <!--<img src="bine.png" alt="Bine logo" class="logo">
+            <!--<h3> Bine</h3>-->
+        </div>
+        <h3 style="text-align: center;">Set Up your Department</h3>
+        <hr>
+        <form>
+        <fieldset>
+            <label for="university">Select your University</label>
+            <select id="university" name="university" onchange="updateOptions('faculty','faculties')">
+                <option value="">-- Select your University --</option>
+            </select>
+
+            <label for="faculty">Select your Faculty</label>
+            <select id="faculty" name="faculty" onchange="updateOptions('department','departments')" disabled>
+                <option value="">-- Select your Faculty--</option>
+            </select>
+            <button id="add-faculty" onclick="addSection('faculty')" class="btn btn-outline">Your Faculty is not on this list? Add it now!</button><br>
+
+            <label for="department">Select your Department</label>
+            <select id="department" name="department" required disabled>
+                <option value="">-- Select your Department</option>
+            </select>
+            <button id="add-faculty" onclick="addSection('department')" class="btn btn-outline">Your Department is not on this list? Add it now!</button><br>
+
+            <label for="curClass"><b>Class:</b> <i>i.e Academic session of Admission(e.g 2024/2025)</i></label>
+            <input type="text" id="curClass" name="curClass" required>
+        </fieldset>
+        </form>
+        <button type="button" id="createClass" onclick="createClass()" class="btn btn-primary" style="background-color:rgb(27, 160, 238); color: black; font-weight: 900; border: black double 3px; width: 80%; margin: auto;">Set-Up Class</button>
+    </div>
+    <script type="module" src="signup.js"></script>
+</body>
+</html>

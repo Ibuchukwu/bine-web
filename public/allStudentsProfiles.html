@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bine - Admin Dashboard</title>
+  <link rel="icon" type="image/png" href="bine.png">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <link rel="stylesheet" href="tables.css"/>
+  <style>
+          .modal-content {
+            flex-grow: 1;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            width: auto;
+            max-width: 80vw;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h4 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .modal-close {
+            font-size: 1.5rem;
+            justify-self: end;
+            cursor: pointer;
+            color: var(--dark-gray);
+        }
+        
+        .modal-body {
+            padding: 20px;
+            width: 70vw;
+        }
+        
+        .modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        @media only screen and (min-width: 750px){
+        .modal-body {
+          padding: 20px;
+          width: 70vw;
+          height: 90vh;
+        }
+        }
+  </style>
+</head>
+
+<body>
+    <div class="admin-container">
+      <!-- Sidebar -->
+      <div id="sidebar" class="sidebar">
+          <a href="dashboard.html" style="text-decoration: none; color: inherit;"><div id="avatar">
+            <h3 id="className">SOE 25</h3>
+            <p id="departmentName">Software Engineering Department<br>(Class of 2024/2025)</p>
+          </div></a>
+          <hr/>
+          <div class="menu-section">
+            <a href="dashboard.html"><span>🏚 Go to Dashboard</span></a>
+          </div>
+
+          <div class="menu-section">
+            <p>Student Management</p>
+            <a href="approveProfiles.html"><span>✔ Approve Student Profiles</span></a>
+            <a href="allStudentsProfiles.html"><span>👥 Show All Student Profiles</span></a>
+          </div>
+          
+        <div class="menu-section">
+          <p>Dues Management</p>
+          <a href="manageDue.html"><span>🛠 Manage Dues</span></a>
+          <a href="reportDue.html"><span>📊 Dues Report</span></a>
+        </div>
+
+        <div class="menu-section">
+          <p>Lists Management</p>
+          <a href="manageList.html"><span>➕ Manage Lists</span></a>
+          <a href="reportList.html"><span>📜 Lists Report</span></a>
+        </div>
+  
+        <div class="menu-section">
+          <p>Funds Management</p>
+          <a href="withdrawal.html"><span>💸 Make Withdrawal</span></a>
+          <span>📑 Financial Statement</span>
+        </div>
+  
+        <div class="menu-section">
+          <p>Settings</p>
+          <span>🔔 Notification Channels</span>
+          <span onclick="logout()">📤 Log Out</span>
+        </div>
+      </div>
+    
+      <!-- Shadow Overlay -->
+      <div id="shade"></div> <!-- ✅ Added -->
+  
+      <!-- Main Content -->
+      <div id="main-content">
+        <div class="top-bar">
+          <i id="toggleSidebar" class="fa fa-bars"></i>
+          <h1>All Students' Profiles</h1>
+          <div class="status-indicator">
+            <i class="fas fa-circle" style="font-size: 8px; color: var(--success-color);"></i>
+            <span>Online</span>
+          </div>
+        </div>
+        
+        <div class="page-header">
+          <h2 class="page-title">Students' Profiles</h2>
+          <div class="action-buttons">
+            <button class="btn btn-outline" id="exportPdfBtn">
+              <i class="fa-duotone fa-solid fa-file-export"></i> Export to PDF
+            </button>
+            <button class="btn btn-primary" id="addStudent">
+              <i class="fa-duotone fa-solid fa-user-plus"></i> Create a student Profile
+            </button>
+          </div>
+        </div><br>
+        <div id="titles" style="display: block; font-weight: 550; background-color:var(--primary-light); border: black double 3px; border-radius: 7px; padding: 4px;  ">
+          <span class="table-meta-title">School Name:</span><span id="schoolName">--</span><br>
+          <span class="table-meta-title">Faculty Name:</span><span id="facultyName">--</span><br>
+          <span class="table-meta-title">Department Name:</span><span id="profileDepartmentName">--</span><br>
+          <span class="table-meta-title">Class Name:</span><span id="curClass">--</span><br>
+        </div><br>
+        <ul><h3 style="text-align: center;">Students' Profiles</h3></ul><br>
+          <!-- Add this search section -->
+          <div class="search-section">
+            <div class="search-container">
+              <input type="text" id="searchInput" placeholder="Search by name, registration no, or email...">
+              <div class="search-actions">
+                <button id="searchBtn" class="btn btn-primary">
+                  <i class="fas fa-search"></i> Search
+                </button>
+                <button id="clearSearchBtn" class="btn btn-outline">
+                  <i class="fas fa-times"></i> Clear
+                </button>
+              </div>
+            </div>
+          </div>
+          <br>
+          <h2 id="classNameHeader"></h2>
+          <div class="dues-table-container">
+            <div class="table-responsive">
+              <table id="duesTable">
+                <thead>
+                  <tr>
+                  <th>S/N</th>
+                  <th>Registration No</th>
+                  <th>Name</th>
+                  <th>Phone Number</th>
+                  <th>E-mail address</th>
+                  <th>Date Registered</th>
+                  <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="TableBody">
+                  <tr>
+                    <td colspan="7" class="empty-state">
+                      <i class="fas fa-clipboard-list"></i>
+                      <h3>No Profiles found</h3>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="members-length" class="table-footer">
+            </div>
+        </div>
+      </div>
+    <script type="module" src="./allStudentsProfiles.js"></script>
+  </body>  
+</html>

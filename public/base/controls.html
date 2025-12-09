@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bine | Admin Controls</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation (Same as index.html) -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="https://via.placeholder.com/40" alt="Bine Logo" class="logo">
+                <h2>Bine Admin</h2>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="index.html">
+                            <i class="fas fa-tachometer-alt"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="active">
+                        <a href="controls.html">
+                            <i class="fas fa-cog"></i>
+                            <span>Controls</span>
+                        </a>
+                    </li>
+                    <!-- Other menu items same as index.html -->
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <img src="https://via.placeholder.com/40" alt="User Profile">
+                    <div class="user-info">
+                        <span class="user-name">Admin User</span>
+                        <span class="user-role">CEO</span>
+                    </div>
+                </div>
+                <a href="#" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Admin Controls</h1>
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="controls-grid">
+                <!-- System Settings -->
+                <div class="control-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-sliders-h"></i> System Settings</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="system-name">System Name</label>
+                            <input type="text" id="system-name" value="Bine">
+                        </div>
+                        <div class="form-group">
+                            <label for="system-email">System Email</label>
+                            <input type="email" id="system-email" value="contact@bine.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="maintenance-mode">Maintenance Mode</label>
+                            <label class="switch">
+                                <input type="checkbox" id="maintenance-mode">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="transaction-fee">Transaction Fee (%)</label>
+                            <input type="number" id="transaction-fee" value="1.2" step="0.1" min="0" max="5">
+                        </div>
+                        <button class="btn btn-primary">Save Settings</button>
+                    </div>
+                </div>
+
+                <!-- User Management -->
+                <div class="control-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-users-cog"></i> User Management</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="user-registration">Allow New Registrations</label>
+                            <label class="switch">
+                                <input type="checkbox" id="user-registration" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="email-verification">Require Email Verification</label>
+                            <label class="switch">
+                                <input type="checkbox" id="email-verification" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="max-login-attempts">Max Login Attempts</label>
+                            <input type="number" id="max-login-attempts" value="5" min="1" max="10">
+                        </div>
+                        <button class="btn btn-primary">Save Settings</button>
+                    </div>
+                </div>
+
+                <!-- Payment Gateway -->
+                <div class="control-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-credit-card"></i> Payment Gateway</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="payment-gateway">Active Gateway</label>
+                            <select id="payment-gateway">
+                                <option value="paystack">Paystack</option>
+                                <option value="flutterwave">Flutterwave</option>
+                                <option value="stripe">Stripe</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="public-key">Public Key</label>
+                            <input type="password" id="public-key" value="pk_test_xxxxxxxxxxxx">
+                            <i class="fas fa-eye toggle-password"></i>
+                        </div>
+                        <div class="form-group">
+                            <label for="secret-key">Secret Key</label>
+                            <input type="password" id="secret-key" value="sk_test_xxxxxxxxxxxx">
+                            <i class="fas fa-eye toggle-password"></i>
+                        </div>
+                        <div class="form-group">
+                            <label for="test-mode">Test Mode</label>
+                            <label class="switch">
+                                <input type="checkbox" id="test-mode" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <button class="btn btn-primary">Save Settings</button>
+                    </div>
+                </div>
+
+                <!-- Notification Settings -->
+                <div class="control-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-bell"></i> Notification Settings</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="email-notifications">Email Notifications</label>
+                            <label class="switch">
+                                <input type="checkbox" id="email-notifications" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="sms-notifications">SMS Notifications</label>
+                            <label class="switch">
+                                <input type="checkbox" id="sms-notifications">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="notification-email">Notification Email</label>
+                            <input type="email" id="notification-email" value="notifications@bine.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="admin-alerts">Admin Alerts</label>
+                            <label class="switch">
+                                <input type="checkbox" id="admin-alerts" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <button class="btn btn-primary">Save Settings</button>
+                    </div>
+                </div>
+
+                <!-- Security Settings -->
+                <div class="control-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-shield-alt"></i> Security Settings</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="password-strength">Minimum Password Strength</label>
+                            <select id="password-strength">
+                                <option value="1">Low</option>
+                                <option value="2" selected>Medium</option>
+                                <option value="3">High</option>
+                                <option value="4">Very High</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="2fa">Two-Factor Authentication</label>
+                            <label class="switch">
+                                <input type="checkbox" id="2fa">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="session-timeout">Session Timeout (minutes)</label>
+                            <input type="number" id="session-timeout" value="30" min="5" max="1440">
+                        </div>
+                        <div class="form-group">
+                            <label for="ip-restriction">IP Restriction</label>
+                            <label class="switch">
+                                <input type="checkbox" id="ip-restriction">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <button class="btn btn-primary">Save Settings</button>
+                    </div>
+                </div>
+
+                <!-- Backup & Restore -->
+                <div class="control-card">
+                    <div class="card-header">
+                        <h3><i class="fas fa-database"></i> Backup & Restore</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="auto-backup">Auto Backup</label>
+                            <label class="switch">
+                                <input type="checkbox" id="auto-backup" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="backup-frequency">Backup Frequency</label>
+                            <select id="backup-frequency">
+                                <option value="daily">Daily</option>
+                                <option value="weekly" selected>Weekly</option>
+                                <option value="monthly">Monthly</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="backup-location">Backup Location</label>
+                            <select id="backup-location">
+                                <option value="server">Server</option>
+                                <option value="cloud" selected>Cloud Storage</option>
+                                <option value="both">Both</option>
+                            </select>
+                        </div>
+                        <div class="button-group">
+                            <button class="btn btn-primary"><i class="fas fa-download"></i> Backup Now</button>
+                            <button class="btn btn-secondary"><i class="fas fa-upload"></i> Restore</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

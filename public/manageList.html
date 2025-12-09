@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bine - Manage Lists</title>
+  <link rel="icon" type="image/png" href="bine.png">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="manageDue.css">
+</head>
+
+<body>
+  <div class="admin-container">
+    <!-- Sidebar (unchanged) -->
+    <div id="sidebar" class="sidebar">
+        <a href="dashboard.html" style="text-decoration: none; color: inherit;"><div id="avatar">
+        <h3 id="className">SOE 25</h3>
+        <p id="departmentName">Software Engineering Department<br>(Class of 2024/2025)</p>
+        </div></a>
+        <hr/>
+
+        <div class="menu-section">
+            <a href="dashboard.html"><span>🏚 Go to Dashboard</span></a>
+        </div>
+        
+        <div class="menu-section">
+        <p>Student Management</p>
+        <a href="approveProfiles.html"><span>✔ Approve Student Profiles</span></a>
+        <a href="allStudentsProfiles.html"><span>👥 Show All Student Profiles</span></a>
+        </div>
+        
+    <div class="menu-section">
+        <p>Dues Management</p>
+        <a href="manageDue.html"><span>🛠 Manage Dues</span></a>
+        <a href="reportDue.html"><span>📊 Dues Report</span></a>
+    </div>
+
+    <div class="menu-section">
+    <p>Lists Management</p>
+    <a href="manageList.html"><span>➕ Manage Lists</span></a>
+    <a href="reportList.html"><span>📜 Lists Report</span></a>
+    </div>
+
+    <div class="menu-section">
+        <p>Funds Management</p>
+        <a href="withdrawal.html"><span>💸 Make Withdrawal</span></a>
+        <span>📑 Financial Statement</span>
+    </div>
+
+    <div class="menu-section">
+        <p>Settings</p>
+        <span>🔔 Notification Channels</span>
+        <span onclick="logout()">📤 Log Out</span>
+    </div>
+    </div>
+
+  
+    <!-- Shadow Overlay -->
+    <div id="shade"></div>
+  
+    <!-- Main Content -->
+    <div id="main-content">
+      <div class="top-bar">
+        <i id="toggleSidebar" class="fa fa-bars"></i>
+        <h1>Manage Lists</h1>
+        <div class="status-indicator">
+          <i class="fas fa-circle" style="font-size: 8px; color: var(--success-color);"></i>
+          <span>Online</span>
+        </div>
+      </div>
+      
+      <div class="page-header">
+        <h2 class="page-title">All Class Lists</h2>
+        <div class="action-buttons">
+          <button class="btn btn-outline" id="filterBtn">
+            <i class="fas fa-filter"></i> Filter
+          </button>
+          <button class="btn btn-primary" id="newlistBtn">
+            <i class="fas fa-plus"></i> New List
+          </button>
+        </div>
+      </div>
+      
+      <!-- Filter Section -->
+      <div class="filter-section" id="filterSection" style="display: none;">
+        <div class="filter-grid">
+          <div class="filter-group">
+            <label for="statusFilter">Status</label>
+            <select id="statusFilter" class="filter-control">
+              <option value="">All Statuses</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+              <option value="pending">Pending</option>
+            </select>
+          </div>
+          
+          <div class="filter-group">
+            <label for="dateFrom">From Date</label>
+            <input type="date" id="dateFrom" class="filter-control">
+          </div>
+          
+          <div class="filter-group">
+            <label for="dateTo">To Date</label>
+            <input type="date" id="dateTo" class="filter-control">
+          </div>
+        </div>
+        
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 15px;">
+          <button class="btn btn-outline" id="resetFilters">
+            Reset
+          </button>
+          <button class="btn btn-primary" id="applyFilters">
+            Apply Filters
+          </button>
+        </div>
+      </div>
+      
+      <!-- lists Table -->
+      <div class="dues-table-container">
+        <div class="table-responsive">
+          <table id="listsTable">
+            <thead>
+              <tr>
+                <th>List Name</th>
+                <th>List ID</th>
+                <th>Current Batch</th>
+                <th>Status</th>
+                <th>Created</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="listsTableBody">
+              <!-- Data will be loaded here via JavaScript -->
+              <tr>
+                <td colspan="7" class="empty-state">
+                  <i class="fas fa-clipboard-list"></i>
+                  <h3>No list found</h3>
+                  <p>Create the first list or adjust your filters</p>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Pagination -->
+        <div class="pagination" id="pagination">
+          <!-- Pagination will be loaded here via JavaScript -->
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+
+      </div>
+      <div class="modal-body">
+
+      </div>
+      <div class="modal-footer">
+        
+      </div>
+    </div>
+  </div>
+
+   <!-- Create list Modal -->
+   <div class="modal create-due-modal" id="createlistModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Create New list</h3>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="createlistForm" class="create-due-form">
+          <div class="form-header">
+            <h2>Create New list</h2>
+            <p>Fill in the details below to create a new list for your class</p>
+          </div>
+          
+          <div class="form-grid">
+            <!-- Row 1 -->
+            <div class="form-group">
+              <label for="createlistName">Name of this list <i>(e.g "GST101 Students")</i></label>
+              <input type="text" id="createlistName" class="form-control" placeholder="Enter list name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="createlistId">list short-code <i>(e.g "GST101")</i></label>
+              <input type="text" id="createlistId" class="form-control" placeholder="Enter short code" required>
+            </div>
+            
+            <!-- Full width row -->
+            <div class="form-group full-width">
+              <label for="createlistDescription">Describe this list</label>
+              <textarea id="createlistDescription" class="form-control" rows="3" placeholder="Enter description"></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="listBatch">Batch for list</label>
+              <input type="text" id="listBatch" class="form-control" rows="3" value="Batch A" placeholder="Enter Batch identifier" required>
+            </div>
+
+            <!-- Checkbox options -->
+            <div class="form-group checkbox-group">
+              <input type="checkbox" id="createIsCompulsory">
+              <label for="createIsCompulsory">list is compulsory</label>
+            </div>
+
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="cancelCreate">Cancel</button>
+        <button class="btn btn-primary" id="submitCreatelist">Create list</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit list Modal -->
+  <div class="modal" id="editlistModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Edit list</h3>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <form id="editlistForm">
+          <!-- Form fields will be populated via JavaScript -->
+                    <div class="form-grid">
+            <!-- Row 1 -->
+            <div class="form-group">
+              <label for="editlistName">Name of this list <i>(e.g "GST101 Students")</i></label>
+              <input type="text" id="editlistName" class="form-control" placeholder="Enter list name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="editlistId">list short-code <i>(e.g "GST101")</i></label>
+              <input type="text" id="editlistId" class="form-control" placeholder="Enter short code" required disabled>
+            </div>
+            
+            <div class="form-group">
+                <label for="editlistStatus">Status</label>
+                <select id="editlistStatus" class="form-control" required>
+                    <option value="active">Active</option>
+                    <option value="inactive">Inactive</option>
+                    <option value="pending">Pending</option>
+                </select>
+            </div>
+            <!-- Full width row -->
+            <div class="form-group full-width">
+              <label for="editlistDescription">Describe this list</label>
+              <textarea id="editlistDescription" class="form-control" rows="3" placeholder="Enter description"></textarea>
+            </div>
+            
+            <div class="form-group">
+              <label for="editlistBatch">Batch for list</label>
+              <input type="text" id="editlistBatch" class="form-control" rows="3" value="Batch A" placeholder="Enter Batch identifier" required>
+            </div>
+
+            <!-- Checkbox options -->
+            <div class="form-group checkbox-group">
+              <input type="checkbox" id="editIsCompulsory">
+              <label for="editIsCompulsory">list is compulsory</label>
+            </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="cancelEdit">Cancel</button>
+        <button class="btn btn-primary" id="saveChanges">Save Changes</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Delete Confirmation Modal -->
+  <div class="modal" id="deleteModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Confirm Deletion</h3>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this list? This action cannot be undone.</p>
+        <p><strong>list Name:</strong> <span id="listToDeleteName"></span></p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="cancelDelete">Cancel</button>
+        <button class="btn btn-danger" id="confirmDelete">Delete list</button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- View list Modal -->
+  <div class="modal" id="viewlistModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">list Details</h3>
+        <span class="modal-close">&times;</span>
+      </div>
+      <div class="modal-body">
+        <div class="due-details">
+          <div class="detail-row">
+            <span class="detail-label">list Name:</span>
+            <span class="detail-value" id="viewlistName"></span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Short Code:</span>
+            <span class="detail-value" id="viewlistId"></span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Status:</span>
+            <span class="detail-value" id="viewlistStatus"></span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Compulsory:</span>
+            <span class="detail-value" id="viewIsCompulsory"></span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-label">Created:</span>
+            <span class="detail-value" id="viewlistCreated"></span>
+          </div>
+          <div class="detail-row full-width">
+            <span class="detail-label">Description:</span>
+            <span class="detail-value" id="viewlistDescription"></span>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" id="closeViewModal">Close</button>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="manageList.js"></script>
+</body>
+</html>

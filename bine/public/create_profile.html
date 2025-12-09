@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bine | Create Profile</title>
+    <link rel="icon" type="image/png" href="bine.png">
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <link rel="stylesheet" href="styles.css">
+    <script type="module" src="createProfile.js"></script>
+</head>
+<body>
+    <fieldset id="login-fieldset">
+        <div class="logo-top">
+            <img src="bine.png" alt="Bine logo" class="logo">
+        </div>
+        <h3 style="text-align: center;">Create your Student Profile</h3>
+        <hr><br>
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="fname">First Name:</label>
+                <input type="text" id="fname" name="fname" required autocomplete="name"><br>
+            </div>
+            <div class="form-group">
+                <label for="onames">Other Names (Surname First):</label>
+                <input type="text" id="onames" name="onames" required autocomplete="family-name"><br>
+            </div>
+            <div class="form-group">
+                <label for="regno">Registration / Matriculation Number:</label>
+                <input type="text" onchange="updateOptions('university', 'universities')" id="regno" name="regno" required><br>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" autocomplete="email"><br>
+            </div>
+            <div class="form-group">
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required autocomplete="tel-national"><br> 
+            </div>
+            <div class="form-group">
+                <label>Select University:</label>
+                <select id="university" onchange="updateOptions('faculty','faculties')" required>
+                    <option value="">-- Select your University --</option>
+                </select><br>
+            </div>
+            <div class="form-group">
+                <label>Select Faculty:</label>
+                <select id="faculty" onchange="updateOptions('department', 'departments')" disabled required>
+                    <option value="">-- Select your Faculty --</option>
+                </select><br>
+            </div>
+            <div class="form-group">
+                <label>Select Department:</label>
+                <select id="department" onchange="updateOptions('curClass', 'classes')" disabled required>
+                    <option value="">-- Select your Department --</option>
+                </select><br>
+            </div>
+            <div class="form-group">
+                <label>Select Class:</label>
+                <select id="curClass" disabled required>
+                    <option value="">-- Select your Class --</option>
+                </select><br>
+            </div>
+            <button type="submit" id="createProfile-button" class="btn btn-primary" onclick="createProfile()">Create Profile</button>
+        </div>
+    </fieldset>
+</body>
+</html>

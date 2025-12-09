@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Bine - Admin Dashboard</title>
+  <link rel="icon" type="image/png" href="bine.png">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+
+<body>
+    <div class="admin-container">
+      <div id="sidebar" class="sidebar">
+          <a href="dashboard.html" style="text-decoration: none; color: inherit;"><div id="avatar">
+            <h3 id="className">SOE 25</h3>
+            <p id="departmentName">Software Engineering Department<br>(Class of 2024/2025)</p>
+          </div></a>
+          <hr/>
+          <div class="menu-section">
+            <p>Student Management</p>
+            <a href="approveProfiles.html"><span>✔ Approve Student Profiles</span></a>
+            <a href="allStudentsProfiles.html"><span>👥 Show All Student Profiles</span></a>
+          </div>
+          
+        <div class="menu-section">
+          <p>Dues Management</p>
+          <a href="manageDue.html"><span>🛠 Manage Dues</span></a>
+          <a href="reportDue.html"><span>📊 Dues Report</span></a>
+        </div>
+
+        <div class="menu-section">
+          <p>Lists Management</p>
+          <a href="manageList.html"><span>➕ Manage Lists</span></a>
+          <a href="reportList.html"><span>📜 Lists Report</span></a>
+        </div>
+  
+        <div class="menu-section">
+          <p>Funds Management</p>
+          <a href="withdrawal.html"><span>💸 Make Withdrawal</span></a>
+          <span>📑 Financial Statement</span>
+        </div>
+  
+        <div class="menu-section">
+          <p>Settings</p>
+          <span>🔔 Notification Channels</span>
+          <span onclick="logout()">📤 Log Out</span>
+        </div>
+      </div>
+    
+    
+      <div id="shade"></div>
+  
+      <div id="main-content">
+        <div class="top-bar">
+          <i id="toggleSidebar" class="fa fa-bars"></i>
+          <p>Dashboard</p>
+          <div class="status-indicator">
+            <i class="fas fa-circle" style="font-size: 8px; color: var(--success-color);"></i>
+            <span>Online</span>
+          </div>
+        </div><br>
+        <div id="balances">
+          <p id="currentUser" style="font-size: 14px;"></p>
+          <span style="font-style:italic;">Total balance: <br>
+            <span id="total-balance">₦******</span></span>
+        </div><br><hr><br>
+        <a href="./portal.html"><div style="text-decoration: none; background-color: #005B96; border-radius: 10px; width: 60%; margin: auto; color: aliceblue; padding: 5px; font-weight: 400; text-align: center;">Go to Portal </div></a><br>
+        <h3 style="text-align: center; font-size: 20px;"><ul>Recent Payments</ul></h3>
+        <div id="transactions-container" class="hidden">
+          <p>No Actions Yet!</p>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Script -->
+    <script>
+      const toggleSidebar = document.getElementById("toggleSidebar");
+      const sidebar = document.getElementById("sidebar");
+      const shade = document.getElementById("shade");
+  
+      toggleSidebar.addEventListener("click", () => {
+        sidebar.classList.toggle("show");
+        shade.classList.toggle("visible");
+      });
+  
+      shade.addEventListener("click", () => {
+        sidebar.classList.remove("show");
+        shade.classList.remove("visible");
+      });
+    </script>
+    <script type="module" src="./dashboard.js"></script>
+  </body>  
+</html>

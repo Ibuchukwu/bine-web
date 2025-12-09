@@ -1,0 +1,19 @@
+{
+  "name": "bine-functions",
+  "type": "module",
+  "main": "index.js",
+  "engines": {
+    "node": "22"
+  },
+  "scripts": {
+    "deploy": "firebase deploy --only functions:api",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "axios": "^1.10.0",
+    "fastify": "^5.4.0",
+    "firebase-functions": "^6.3.2",
+    "joi": "^17.13.3",
+    "pdfkit": "^0.17.1"
+  }
+}

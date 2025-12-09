@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bine | Smart Student Dues Platform</title>
+  <link rel="icon" type="image/png" href="bine.png">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <audio id="sound" src="testNote.ogg" preload="auto"></audio>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: #F8F9FA;
+      color: #212529;
+    }
+
+    header {
+      background-color: #005B96;
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: row;
+      padding: 4px;
+      font-size: 1.8rem;
+      text-align: start ;
+      font-weight: bold;
+    }
+    img[src="bine.png"] {
+        width: 55px;
+        height: auto;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 25px;
+      font-weight: 500;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 60px 40px;
+      background-color: white;
+    }
+
+    .hero-text {
+      max-width: 600px;
+    }
+
+    .hero-text h1 {
+      font-size: 2.8rem;
+      color: #005B96;
+      margin-bottom: 20px;
+    }
+
+    .hero-text p {
+      font-size: 1.1rem;
+      margin-bottom: 30px;
+    }
+
+    .cta-buttons a {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #005B96;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+      margin-right: 10px;
+    }
+
+    .cta-buttons a:hover {
+      background-color: #004070;
+    }
+
+    .hero-image {
+      background-image: url(hero.jpg);
+      background-repeat: no-repeat;
+      width: 100%;
+      max-width: 400px;
+      height: 300px;
+      background-color: rgba(200,200,200,0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-weight: 500;
+      padding: 5px;
+      color: #ccf;
+      font-size: 20px;
+      text-align: start;
+    }
+
+    .features {
+      padding: 60px 40px;
+      background-color: #F8F9FA;
+    }
+
+    .features h2 {
+      text-align: center;
+      color: #005B96;
+      margin-bottom: 40px;
+      font-size: 2rem;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+    }
+
+    .feature {
+      background-color: white;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      text-align: center;
+    }
+
+    .feature i {
+      font-size: 2rem;
+      color: #005B96;
+      margin-bottom: 10px;
+    }
+
+    .feature h4 {
+      margin-bottom: 10px;
+    }
+
+    .about {
+      padding: 60px 40px;
+      background-color: white;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 40px;
+    }
+
+    .about-image {
+      width: 100%;
+      max-width: 400px;
+      height: 300px;
+      background-color: #D9D9D9;
+      border-radius: 8px;
+    }
+
+    .about-text {
+      flex: 1;
+    }
+
+    .about-text h3 {
+      color: #005B96;
+      margin-bottom: 20px;
+    }
+
+    .about-text p {
+      font-size: 1rem;
+    }
+
+    footer {
+      background-color: #212529;
+      color: #ccc;
+      padding: 20px 40px;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      .hero, .about {
+        flex-direction: column;
+      }
+
+      nav {
+        display: none; /* Simplified for static homepage */
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+        <img src="bine.png" alt="Bine logo" class="logo">
+        <h3> Bine</h3>
+    </div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Features</a>
+      <a href="#">About</a>
+      <a href="./login.html">Login</a>
+      <a href="./signup.html">Register</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Smarter Dues & Records Organizer</h1>
+      <p>
+        Bine is a web platform that helps university course representatives efficiently collect, track, and manage student dues, registrations, and textbook payments — all without pen or paper.
+      </p>
+      <div class="cta-buttons">
+        <a href="./signup.html">Get Started</a>
+        <a style="background-color: white; color: #005B96; border: 1.5px solid #005B96;" href="./login.html">Login</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <!-- Placeholder for hero image (e.g. dashboard or vector student illustration) -->
+    </div>
+  </section>
+
+  <section class="features">
+    <h2>What Bine Can Do</h2>
+    <div class="feature-grid">
+      <div class="feature">
+        <i class="fa fa-credit-card"></i>
+        <h4>Digital Payments</h4>
+        <p>Securely collect fees and dues from students via bank or wallet transfers.</p>
+      </div>
+      <div class="feature">
+        <i class="fa fa-calculator"></i>
+        <h4>Error-Free Computation</h4>
+        <p>Automatic calculations for total dues, remaining balances, and history logs, and even custom computations and have their reports generated at ease...</p>
+      </div>
+      <div class="feature">
+        <i class="fa fa-user-lock"></i>
+        <h4>Role-Based Access</h4>
+        <p>Designed for both course reps and department admins to manage student records.</p>
+      </div>
+      <div class="feature">
+        <i class="fa fa-check-circle"></i>
+        <h4>Transaction Verification</h4>
+        <p>Instantly verify who has paid and who hasn’t — no paper errors or miscommunication.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="about">
+    <div class="about-image">
+      <!-- Placeholder for about image (e.g. record book replaced with a dashboard) -->
+      <p style="text-align: center; padding-top: 130px;">About Image</p>
+    </div>
+    <div class="about-text">
+      <h3>Why Bine?</h3>
+      <p>
+        Bine was born out of the stress students and course reps face when managing bulk payments. With Bine, every payment is recorded securely, accurately, and without stress. You can say goodbye to missing names, wrong sums, or tiring cross-checks.
+        <br><br>
+        Whether you’re paying your textbook dues, registering a course, or tracking who paid what, Bine makes it fast, secure, and paper-free.
+      </p>
+    </div>
+  </section>
+
+  <footer>
+    <p>&copy; 2025 Bine. Designed for Nigerian Universities by Students, for Students.</p>
+  </footer>
+
+</body>
+</html>

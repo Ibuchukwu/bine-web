@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bine - Dues Reports</title>
+  <link rel="icon" type="image/png" href="bine.png">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Due Widget Styles */
+          .due-widget {
+            width: 80vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--light-grey);
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+          }
+
+          .due-widget-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--medium-gray);
+          }
+
+          .due-widget-body {
+            padding: 15px;
+            overflow-y: auto;
+            flex-grow: 1;
+          }
+
+          .due-widget-footer {
+            padding: 15px;
+            border-top: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: flex-end;
+          }
+
+          .due-item {
+            padding: 12px 15px;
+            border: 1px solid var(--light-grey);
+            background-color: var(--secondary-color);
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+          }
+
+          .due-item:hover {
+            background-color: var(--dark-gray);
+            border-color: #005B96;
+          }
+
+          .due-item h3 {
+            margin: 0 0 5px 0;
+            color:var(--primary-light);
+            font-size: 1rem;
+          }
+
+          .due-item p {
+            margin: 0;
+            color: var(--light-gray);
+            font-size: 0.85rem;
+          }
+.custom-modal-content {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            width: 100%;
+            max-width: 800px; /* Increased width for create due form */
+            max-height: 90vh;
+            overflow-y: auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .custom-modal-header {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .modal-header h4 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+        
+        .modal-close {
+            font-size: 1.5rem;
+            justify-self: end;
+            cursor: pointer;
+            color: var(--dark-gray);
+        }
+        
+        .custom-modal-body {
+            padding: 20px;
+        }
+        
+        .custom-modal-footer {
+            padding: 15px 20px;
+            border-top: 1px solid var(--medium-gray);
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+  </style>
+</head>
+
+<body>
+  <div class="admin-container">
+    <!-- Sidebar (unchanged) -->
+    <div id="sidebar" class="sidebar">
+        <a href="dashboard.html" style="text-decoration: none; color: inherit;"><div id="avatar">
+          <h3 id="className">SOE 25</h3>
+          <p id="departmentName">Software Engineering Department<br>(Class of 2024/2025)</p>
+        </div></a>
+        <hr/>
+        <div class="menu-section">
+          <p>Student Management</p>
+          <a href="approveProfiles.html"><span>✔ Approve Student Profiles (3 pending)</span></a>
+          <a href="allStudentsProfiles.html"><span>👥 Show All Student Profiles</span></a>
+        </div>
+        
+      <div class="menu-section">
+        <p>Dues Management</p>
+        <a href="manageDue.html"><span>🛠 Manage Dues</span></a>
+        <a href="reportDue.html"><span>📊 Dues Report</span></a>
+      </div>
+
+      <div class="menu-section">
+        <p>Lists Management</p>
+        <a href="manageList.html"><span>➕ Manage Lists</span></a>
+        <a href="reportList.html"><span>📜 Lists Report</span></a>
+      </div>
+
+      <div class="menu-section">
+        <p>Funds Management</p>
+        <a href="withdrawal.html"><span>💸 Make Withdrawal</span></a>
+        <span>📑 Financial Statement</span>
+      </div>
+
+      <div class="menu-section">
+        <p>Settings</p>
+        <span>🔔 Notification Channels</span>
+        <span onclick="logout()">📤 Log Out</span>
+      </div>
+    </div>
+    
+    <!-- Shadow Overlay -->
+    <div id="shade"></div>
+  
+    <!-- Main Content -->
+    <div id="main-content">
+      <div class="top-bar">
+        <i id="toggleSidebar" class="fa fa-bars"></i>
+        <h1>Approve Students' Profiles</h1>
+        <div class="status-indicator">
+          <i class="fas fa-circle" style="font-size: 8px; color: var(--success-color);"></i>
+          <span>Online</span>
+        </div>
+      </div>
+      
+      <div class="page-header">
+        <h2 class="page-title">Pending Approvals</h2>
+      </div>
+      <div>
+        <h2 id="classNameHeader"></h2>
+        <div class="dues-table-container" id="dues-table-container">
+            <div class="table-responsive">
+              <table id="duesTable">
+                <thead>
+                  <tr>
+                  <th>S/N</th>
+                  <th>Registration No</th>
+                  <th>Name</th>
+                  <th>Phone Number</th>
+                  <th>Registerd On</th>
+                  <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody id="TableBody">
+                  <tr>
+                    <td colspan="7" class="empty-state">
+                      <i class="fas fa-clipboard-list"></i>
+                      <h3>No Pending Approvals</h3>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div id="members-length" class="table-footer">
+            </div>
+        </div>
+  <script type="module" src="approveProfiles.js"></script>
+</body>
+</html>

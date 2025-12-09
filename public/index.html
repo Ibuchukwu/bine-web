@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bine | Smart Dues & Lists Management for Universities</title>
+  <link rel="icon" type="image/png" href="bine.png">
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <audio id="sound" src="testNote.ogg" preload="auto"></audio>
+
+  <style>
+    :root {
+      --primary-color: #005B96;
+      --primary-light: #e0e7ff;
+      --secondary-color: #004080;
+      --text-color: #2b2d42;
+      --light-gray: #f8f9fa;
+      --medium-gray: #e9ecef;
+      --dark-gray: #6c757d;
+      --success-color: #4bb543;
+      --warning-color: #ffcc00;
+      --error-color: #ff3333;
+      --border-radius: 8px;
+      --box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Quicksand', 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background-color: var(--light-gray);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 15px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: var(--box-shadow);
+    }
+
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .logo img {
+      width: 55px;
+      height: auto;
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      padding: 8px 5px;
+      border-radius: var(--border-radius);
+    }
+
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.15);
+      text-decoration: none;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .hero {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      padding: 80px 0;
+      background: linear-gradient(135deg, #ffffff 0%, var(--primary-light) 100%);
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 300px;
+      padding-right: 40px;
+    }
+
+    .hero-text h1 {
+      font-size: 2.8rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .hero-text p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      color: var(--dark-gray);
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 14px 28px;
+      border-radius: var(--border-radius);
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      text-align: center;
+      border: 2px solid transparent;
+    }
+
+    .btn-primary {
+      background-color: var(--primary-color);
+      color: white;
+      box-shadow: 0 4px 15px rgba(0, 91, 150, 0.3);
+    }
+
+    .btn-primary:hover {
+      background-color: var(--secondary-color);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 91, 150, 0.4);
+    }
+
+    .btn-outline {
+      background-color: white;
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--primary-light);
+      transform: translateY(-3px);
+    }
+
+    .hero-image {
+      flex: 1;
+      min-width: 300px;
+      height: 350px;
+      background: linear-gradient(45deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+    }
+
+    .hero-image::before {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200"><rect fill="none" width="200" height="200"/><path fill="rgba(255,255,255,0.1)" d="M45,0 L55,20 L75,25 L60,40 L65,60 L45,50 L25,60 L30,40 L15,25 L35,20 Z"/></svg>');
+      background-size: 70px;
+      opacity: 0.3;
+    }
+
+    .hero-image-content {
+      text-align: center;
+      color: white;
+      padding: 30px;
+      z-index: 2;
+    }
+
+    .hero-image h2 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .hero-image ul {
+      text-align: left;
+      list-style: none;
+      font-size: 1.1rem;
+    }
+
+    .hero-image li {
+      margin-bottom: 15px;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .hero-image li i {
+      margin-right: 10px;
+      margin-top: 4px;
+      color: var(--warning-color);
+    }
+
+    .section-title {
+      text-align: center;
+      color: var(--primary-color);
+      margin-bottom: 50px;
+      font-size: 2.2rem;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: "";
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: var(--primary-color);
+      margin: 15px auto 0;
+      border-radius: 2px;
+    }
+
+    .features {
+      padding: 80px 0;
+      background-color: white;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .feature {
+      background-color: white;
+      padding: 30px;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid var(--medium-gray);
+    }
+
+    .feature:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      border-color: var(--primary-light);
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      background-color: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: var(--primary-color);
+      font-size: 2rem;
+    }
+
+    .feature h4 {
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      color: var(--primary-color);
+    }
+
+    .feature p {
+      color: var(--dark-gray);
+    }
+
+    .about {
+      padding: 80px 0;
+      background-color: var(--light-gray);
+    }
+
+    .about-content {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .about-text {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .about-text h3 {
+      color: var(--primary-color);
+      margin-bottom: 25px;
+      font-size: 1.8rem;
+    }
+
+    .about-text p {
+      margin-bottom: 20px;
+      font-size: 1.1rem;
+    }
+
+    .about-image {
+      flex: 1;
+      min-width: 300px;
+      height: 350px;
+      background: linear-gradient(45deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+      border-radius: var(--border-radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: var(--box-shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-image-content {
+      color: white;
+      padding: 30px;
+      text-align: center;
+      z-index: 2;
+    }
+
+    .about-image h3 {
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .dual-system {
+      padding: 80px 0;
+      background-color: white;
+    }
+
+    .system-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    .system-card {
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      padding: 30px;
+      border: 1px solid var(--medium-gray);
+      transition: all 0.3s ease;
+    }
+
+    .system-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .system-card-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .system-card-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--primary-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 20px;
+      color: var(--primary-color);
+      font-size: 1.5rem;
+    }
+
+    .system-card h3 {
+      color: var(--primary-color);
+      font-size: 1.5rem;
+    }
+
+    .system-card ul {
+      list-style: none;
+      margin-top: 20px;
+    }
+
+    .system-card li {
+      margin-bottom: 15px;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .system-card li::before {
+      content: "✓";
+      color: var(--success-color);
+      position: absolute;
+      left: 0;
+      font-weight: bold;
+    }
+
+    .pidgin-section {
+      padding: 80px 0;
+      background-color: var(--primary-color);
+      color: white;
+    }
+
+    .pidgin-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .pidgin-content h3 {
+      font-size: 2rem;
+      margin-bottom: 30px;
+      color: var(--warning-color);
+    }
+
+    .pidgin-text {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: var(--border-radius);
+      padding: 30px;
+      font-size: 1.2rem;
+      line-height: 1.8;
+      margin-bottom: 30px;
+      border-left: 4px solid var(--warning-color);
+    }
+
+    .how-it-works {
+      padding: 80px 0;
+      background-color: var(--light-gray);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      counter-reset: step-counter;
+    }
+
+    .step {
+      position: relative;
+      padding: 30px 25px 25px 25px;
+      background: white;
+      border-radius: var(--border-radius);
+      box-shadow: var(--box-shadow);
+      border: 1px solid var(--medium-gray);
+    }
+
+    .step::before {
+      counter-increment: step-counter;
+      content: counter(step-counter);
+      position: absolute;
+      top: -20px;
+      left: 20px;
+      width: 40px;
+      height: 40px;
+      background: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .step h4 {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .pricing {
+      padding: 80px 0;
+      background-color: white;
+      text-align: center;
+    }
+
+    .pricing-box {
+      background: white;
+      border-radius: var(--border-radius);
+      padding: 40px 30px;
+      box-shadow: var(--box-shadow);
+      max-width: 500px;
+      margin: 0 auto;
+      border: 2px solid var(--primary-light);
+    }
+
+    .pricing-box h3 {
+      color: var(--primary-color);
+      font-size: 1.8rem;
+      margin-bottom: 20px;
+    }
+
+    .price {
+      font-size: 3rem;
+      color: var(--primary-color);
+      font-weight: 700;
+      margin: 20px 0;
+    }
+
+    .price span {
+      font-size: 1.2rem;
+      color: var(--dark-gray);
+      font-weight: normal;
+    }
+
+    .pricing-features {
+      text-align: left;
+      margin: 30px 0;
+      padding-left: 20px;
+    }
+
+    .pricing-features li {
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .pricing-features li::before {
+      content: "✓";
+      color: var(--success-color);
+      position: absolute;
+      left: -20px;
+      font-weight: bold;
+    }
+
+    .cta-section {
+      padding: 80px 0;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .cta-section p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 30px;
+      opacity: 0.9;
+    }
+
+    footer {
+      background-color: var(--text-color);
+      color: var(--light-gray);
+      padding: 40px 0 20px;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .footer-column h4 {
+      color: white;
+      margin-bottom: 20px;
+      font-size: 1.3rem;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .footer-column h4::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--warning-color);
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-column a {
+      color: var(--light-gray);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .footer-column a:hover {
+      color: var(--warning-color);
+      padding-left: 5px;
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .header-content {
+        padding: 0 20px;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--primary-color);
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+        box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+      }
+
+      nav.active {
+        display: flex;
+      }
+
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .hero-text {
+        padding-right: 0;
+        margin-bottom: 40px;
+      }
+
+      .section-title {
+        font-size: 1.8rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .btn {
+        width: 100%;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .hero-text h1 {
+        font-size: 2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-content">
+      <div class="logo">
+        <img src="bine.png" alt="Bine logo">
+        <h3>Bine</h3>
+      </div>
+      <nav id="mainNav">
+        <a href="#">Home</a>
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="./login.html">Login</a>
+        <a href="./signup.html" class="btn btn-outline" style="color: white; border-color: white;">Register</a>
+      </nav>
+      <button class="mobile-menu-btn" id="menuToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-text">
+        <h1>Smart Dues & Lists Management for University Classes</h1>
+        <p>
+          Bine helps course representatives effortlessly collect payments and manage lists, while giving students a simple portal to pay dues and join lists. No more paper records or WhatsApp chaos!
+        </p>
+        <div class="cta-buttons">
+          <a href="./login.html" class="btn btn-primary">Login Now</a>
+          <a href="#dual-system" class="btn btn-outline">See How It Works</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="hero-image-content">
+          <h2>Everything Course Reps Need</h2>
+          <ul>
+            <li><i class="fas fa-check-circle"></i> Collect dues digitally</li>
+            <li><i class="fas fa-check-circle"></i> Manage custom lists</li>
+            <li><i class="fas fa-check-circle"></i> Track payments in real-time</li>
+            <li><i class="fas fa-check-circle"></i> Download reports instantly</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="features" id="features">
+    <div class="container">
+      <h2 class="section-title">Powerful Features</h2>
+      <div class="feature-grid">
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-money-bill-wave"></i>
+          </div>
+          <h4>Dues Management</h4>
+          <p>Create and manage different dues projects - textbooks, department fees, events, etc. Set amounts, deadlines, and descriptions.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-list-check"></i>
+          </div>
+          <h4>Custom Lists</h4>
+          <p>Create lists for electives, tutorials, or any class activity. Students can self-enlist through the portal.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-file-export"></i>
+          </div>
+          <h4>Instant Reports</h4>
+          <p>Download payment reports or list participants with one click. Export as PDF or Excel for submission.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-user-shield"></i>
+          </div>
+          <h4>Class-Specific Access</h4>
+          <p>Each department has its own portal. Students only see their class dues and lists.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-edit"></i>
+          </div>
+          <h4>Easy Updates</h4>
+          <p>Edit due amounts, list details, or deadlines anytime. Changes sync instantly to student portals.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <h4>Mobile Friendly</h4>
+          <p>Students can pay and join lists from any device. Course reps can manage everything on mobile too.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="dual-system" id="dual-system">
+    <div class="container">
+      <h2 class="section-title">Two Simple Interfaces</h2>
+      <div class="system-cards">
+        <div class="system-card">
+          <div class="system-card-header">
+            <div class="system-card-icon">
+              <i class="fas fa-user-tie"></i>
+            </div>
+            <h3>Course Rep Dashboard</h3>
+          </div>
+          <p>Powerful tools for course representatives to manage everything:</p>
+          <ul>
+            <li>Create and manage dues projects</li>
+            <li>Set up custom lists for class activities</li>
+            <li>View real-time payment status</li>
+            <li>Download reports and lists</li>
+            <li>Edit project details anytime</li>
+            <li>Track complete payment history</li>
+          </ul>
+        </div>
+        <div class="system-card">
+          <div class="system-card-header">
+            <div class="system-card-icon">
+              <i class="fas fa-user-graduate"></i>
+            </div>
+            <h3>Student Portal</h3>
+          </div>
+          <p>Simple interface for students to fulfill their requirements:</p>
+          <ul>
+            <li>View and pay outstanding dues</li>
+            <li>Join relevant class lists</li>
+            <li>View list participation status</li>
+            <li>Access receipts and confirmations</li>
+            <li>All in one centralized portal</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="container">
+      <h2 class="section-title">Why Choose Bine?</h2>
+      <div class="about-content">
+        <div class="about-text">
+          <h3>Designed Specifically for Nigerian Universities</h3>
+          <p>Bine solves the unique challenges faced by Nigerian university students and course representatives. We've built the exact tools you need to eliminate the stress of dues collection and list management.</p>
+          <p>For course reps: No more paper records, manual calculations, or endless WhatsApp messages. For students: No more searching for course reps to make payments or join lists.</p>
+          <p>Everything is automated, transparent, and accessible from anywhere. Departments maintain perfect records while students enjoy a seamless experience.</p>
+          <div class="cta-buttons" style="margin-top: 30px;">
+            <a href="https://wa.me/2347041143286?text=Hey%2C%20How%20do%20I%20get%20started%20with%20Bine%3F" class="btn btn-primary">Get Started</a>
+          </div>
+        </div>
+        <div class="about-image">
+          <div class="about-image-content">
+            <h3>Benefits for Everyone</h3>
+            <ul>
+              <li><i class="fas fa-check-circle"></i> Course Reps: Save 10+ hours weekly</li>
+              <li><i class="fas fa-check-circle"></i> Students: Pay/join lists in 2 minutes</li>
+              <li><i class="fas fa-check-circle"></i> Departments: Accurate digital records</li>
+              <li><i class="fas fa-check-circle"></i> Lecturers: Verified lists on demand</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pidgin-section">
+    <div class="container pidgin-content">
+      <h3>Bine for Una!</h3>
+      <div class="pidgin-text">
+        <p>Bine na dat platform wey dey make life sweet for course reps and students for university. No more writing names for paper or dey collect receipt from everybody!</p>
+        <p>As course rep, you fit:</p>
+        <ul style="text-align: left; margin: 15px 0;">
+          <li>Create "dues" for anything - textbook, department fee, event</li>
+          <li>Make list for tutorial or elective wey lecturer request</li>
+          <li>See who don pay or join list for your dashboard</li>
+          <li>Download report any time you need am</li>
+        </ul>
+        <p>Students sef no go dey disturb you with "I don pay" messages for WhatsApp again. Everything dey automated. Who pay, who never pay - e dey clear like water. Bine dey help you collect money and manage list well-well without headache!</p>
+      </div>
+      <a href="https://wa.me/2347041143286?text=Hey%2C%20How%20do%20I%20get%20started%20with%20Bine%3F" class="btn btn-outline" style="background: rgba(255,255,255,0.15); color: white; border-color: white;">Try Am Now!</a>
+    </div>
+  </section>
+
+  <section class="how-it-works" id="how-it-works">
+    <div class="container">
+      <h2 class="section-title">How Bine Works</h2>
+      <div class="steps">
+        <div class="step">
+          <h4>Course Rep Creates</h4>
+          <p>Set up a dues project or custom list in the dashboard. Add all necessary details like amount, description, and deadline.</p>
+        </div>
+        <div class="step">
+          <h4>Students Access Portal</h4>
+          <p>Classmates see the new due/list in their department portal. They can pay dues or join lists with a few clicks.</p>
+        </div>
+        <div class="step">
+          <h4>Automatic Tracking</h4>
+          <p>Bine verifies payments and list participation in real-time. Course rep dashboard updates instantly.</p>
+        </div>
+        <div class="step">
+          <h4>Download & Submit</h4>
+          <p>When needed, course reps download verified payment reports or completed lists to submit to lecturers or departments.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pricing">
+    <div class="container">
+      <h2 class="section-title">Simple & Transparent Pricing</h2>
+      <div class="pricing-box">
+        <h3>Pay Only When You Collect</h3>
+        <p>Free to set up • No monthly fees • No hidden charges</p>
+        <div class="price">1.2% <span>per transaction</span></div>
+        <p>We charge a small convenience fee only when payments are collected</p>
+        
+        <ul class="pricing-features">
+          <li>Unlimited dues projects and lists</li>
+          <li>All features included</li>
+          <li>24/7 customer support</li>
+          <li>Automatic receipt generation</li>
+          <li>Real-time tracking</li>
+          <li>Secure payment processing</li>
+        </ul>
+        
+        <a href="https://wa.me/2347041143286?text=Hey%2C%20How%20do%20I%20get%20started%20with%20Bine%3F" class="btn btn-primary">Get Started Free</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-section">
+    <div class="container">
+      <h2>Ready to Transform Class Management?</h2>
+      <p>Join the growing number of Nigerian university departments using Bine to simplify dues collection and list management</p>
+      <a href="https://wa.me/2347041143286?text=Hey%2C%20How%20do%20I%20get%20started%20with%20Bine%3F" class="btn btn-outline" style="background: white; color: var(--primary-color); font-weight: 700;">Get Started Now</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-column">
+          <h4>About Bine</h4>
+          <p style="margin-bottom: 15px; opacity: 0.8;">Bine is a smart dues and lists management platform designed specifically for Nigerian university students and course representatives.</p>
+          <p style="opacity: 0.8;">Created by students • For students</p>
+        </div>
+        <div class="footer-column">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#features">Features</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="./login.html">Login</a></li>
+            <li><a href="./signup.html">Sign Up</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Resources</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Tutorials</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Contact Support</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Contact Us</h4>
+          <ul>
+            <li><i class="fas fa-envelope"></i> hello@usebine.com</li>
+            <li><i class="fas fa-phone"></i> +234 704 114 3286</li>
+            <li><i class="fab fa-whatsapp"></i> WhatsApp Support</li>
+            <li><i class="fas fa-map-marker-alt"></i> FUTO, Owerri</li>
+          </ul>
+        </div>
+      </div>
+      <div class="copyright">
+        <p>&copy; 2025 Bine. Designed for Nigerian Universities by Students, for Students.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu toggle
+    const menuToggle = document.getElementById('menuToggle');
+    const mainNav = document.getElementById('mainNav');
+    
+    menuToggle.addEventListener('click', () => {
+      mainNav.classList.toggle('active');
+      
+      // Change icon
+      const icon = menuToggle.querySelector('i');
+      if (icon.classList.contains('fa-bars')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-times');
+      } else {
+        icon.classList.remove('fa-times');
+        icon.classList.add('fa-bars');
+      }
+    });
+    
+    // Close menu when clicking on a link
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mainNav.classList.remove('active');
+        menuToggle.querySelector('i').classList.remove('fa-times');
+        menuToggle.querySelector('i').classList.add('fa-bars');
+      });
+    });
+  </script>
+</body>
+</html>
